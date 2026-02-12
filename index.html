@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Wellness Calculator ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: pulse 15s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.8s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            border-radius: 20px;
+            color: white;
+            margin-bottom: 30px;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(102, 126, 234, 0.3); }
+            to { box-shadow: 0 0 40px rgba(102, 126, 234, 0.6); }
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .welcome-title span {
+            font-size: 35px;
+        }
+
+        .name-input-area {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .name-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            font-size: 16px;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .name-input::placeholder {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .name-input:focus {
+            outline: none;
+            border-color: white;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .greeting-btn {
+            padding: 15px 30px;
+            background: white;
+            border: none;
+            border-radius: 15px;
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .greeting-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .greeting-message {
+            margin-top: 15px;
+            font-size: 18px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Main Content Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        /* Input Section */
+        .input-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 20px;
+            animation: fadeInRight 0.8s;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .input-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: scale(1.02);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .calculate-btn i {
+            font-size: 20px;
+        }
+
+        /* Result Section */
+        .result-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 20px;
+            color: white;
+            animation: fadeInLeft 0.8s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .result-header {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .personal-message {
+            background: rgba(255,255,255,0.2);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            animation: slideIn 0.5s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-name-highlight {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .bmi-badge {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 15px 0;
+            text-align: center;
+            animation: scaleIn 0.5s;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .advice-message {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-top: 15px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            border-left: 5px solid white;
+        }
+
+        /* Character Animation Section */
+        .character-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .character-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .character {
+            text-align: center;
+            animation: bounce 2s infinite;
+            transition: all 0.3s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .character i {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        .character span {
+            display: block;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .character p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .active-character {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.5));
+        }
+
+        /* Copyright Section */
+        .copyright {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(102, 126, 234, 0.2);
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .copyright i {
+            color: #667eea;
+        }
+
+        .copyright a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .copyright a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .character-container {
+                gap: 20px;
+            }
+        }
+
+        /* Font Awesome Icons (using emoji as fallback) */
+        .fa {
+            font-family: 'Segoe UI', 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <div class="welcome-title">
+                <span>👋</span> Welcome to BMI Wellness!
+            </div>
+            <div class="name-input-area">
+                <input type="text" class="name-input" id="userName" placeholder="Enter your beautiful name...">
+                <button class="greeting-btn" onclick="setGreeting()">
+                    <span>✨</span> Save Name
+                </button>
+            </div>
+            <div class="greeting-message" id="greetingMessage">
+                Hello! Please enter your name to get personalized health advice 💪
+            </div>
+        </div>
+
+        <!-- Main Grid - Input and Result Side by Side -->
+        <div class="main-grid">
+            <!-- Left Side - Input For m -->
+            <div class="input-section">
+                <div class="input-title">
+                    <span>📝</span> Your Measurements
+                </div>
+                
+                <div class="input-group">
+                    <label>
+                        <span>⚖️</span> Weight (kg)
+                    </label>
+                    <input type="number" id="weight" placeholder="Enter your weight" step="0.1">
+                </div>
+                
+                <div class="input-group">
+                    <label>
+                        <span>📏</span> Height (cm)
+                    </label>
+                    <input type="number" id="height" placeholder="Enter your height" step="0.1">
+                </div>
+                
+                <button class="calculate-btn" onclick="calculateBMI()">
+                    <span>🔮</span> Calculate My BMI
+                    <span>→</span>
+                </button>
+            </div>
+
+            <!-- Right Side - Result Display -->
+            <div class="result-section" id="resultSection">
+                <div class="result-header">
+                    <span>🎯</span> Your Personal Report
+                </div>
+                
+                <div id="personalMessage" class="personal-message">
+                    <div style="text-align: center;">
+                        <span style="font-size: 40px;">💪</span>
+                        <div class="user-name-highlight" id="displayName">Guest</div>
+                        <div style="font-size: 16px; margin-top: 5px;">Please enter your name and measurements</div>
+                    </div>
+                </div>
+                
+                <div id="bmiResult" style="display: none;">
+                    <div class="bmi-badge" id="bmiValue"></div>
+                    <div id="adviceText" class="advice-message"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Character Animation Section -->
+        <div class="character-section" id="characterSection">
+            <h3 style="font-size: 24px; margin-bottom: 20px;">🎭 Your Health Journey</h3>
+            <div class="character-container">
+                <div class="character" id="leanChar">
+                    <span>🏃</span>
+                    <span style="font-size: 20px; font-weight: 600;">Lean</span>
+                    <p>Active & Energetic</p>
+                </div>
+                <div class="character" id="mediumChar">
+                    <span>🧘</span>
+                    <span style="font-size: 20px; font-weight: 600;">Medium</span>
+                    <p>Balanced & Healthy</p>
+                </div>
+                <div class="character" id="weightChar">
+                    <span>💪</span>
+                    <span style="font-size: 20px; font-weight: 600;">Weight</span>
+                    <p>Strong & Building</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright Section -->
+        <div class="copyright">
+            <span>© 2024 BMI Wellness Calculator</span>
+            <span>|</span>
+            <span>✨ Created with ❤️ for your health</span>
+            <span>|</span>
+            <span>📧 contact@bmiwellness.com</span>
+            <span>|</span>
+            <span><a href="#">Privacy Policy</a></span>
+            <span>|</span>
+            <span>🌐 All Rights Reserved</span>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = 'Guest';
+
+        // Welcome message and name handling
+        function setGreeting() {
+            const nameInput = document.getElementById('userName').value;
+            if (nameInput.trim() !== '') {
+                currentUser = nameInput.trim();
+                document.getElementById('displayName').textContent = currentUser;
+                
+                const greetingMessage = document.getElementById('greetingMessage');
+                const hours = new Date().getHours();
+                let timeGreeting = '';
+                
+                if (hours < 12) timeGreeting = 'Good Morning';
+                else if (hours < 18) timeGreeting = 'Good Afternoon';
+                else timeGreeting = 'Good Evening';
+                
+                greetingMessage.innerHTML = `
+                    <span style="font-size: 20px;">✨</span> 
+                    ${timeGreeting}, ${currentUser}! Welcome to your personal health journey. 
+                    Let's check your BMI and get you on track to a healthier you!
+                `;
+            } else {
+                alert('Please enter your name! ✨');
+            }
+        }
+
+        // Calculate BMI and update all sections
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            
+            // Check if name is entered
+            if (currentUser === 'Guest') {
+                alert('Please enter your name first! 👋');
+                return;
+            }
+            
+            // Validation
+            if (!weight || !height || weight <= 0 || height <= 0) {
+                alert('Please enter valid weight and height! 📊');
+                return;
+            }
+            
+            // Calculate BMI
+            const bmi = weight / ((height / 100) ** 2);
+            const roundedBMI = Math.round(bmi * 10) / 10;
+            
+            // Determine category and personalized advice
+            let category, advice, characterToActivate, emoji;
+            
+            if (bmi < 18.5) {
+                category = 'Underweight';
+                characterToActivate = 'leanChar';
+                emoji = '🏃';
+                advice = `Hey ${currentUser}, you are currently in the lean category. 
+                         While being lean is great, gaining some healthy weight 
+                         would be beneficial for your overall health. Try adding 
+                         more protein-rich foods and strength training to your 
+                         routine! You've got this! 💪✨`;
+            } else if (bmi >= 18.5 && bmi < 25) {
+                category = 'Healthy';
+                characterToActivate = 'mediumChar';
+                emoji = '🧘';
+                advice = `Fantastic ${currentUser}! You are in the healthy weight range. 
+                         Your balanced lifestyle is paying off! Keep maintaining 
+                         this wonderful balance with regular exercise and a 
+                         nutritious diet. You're an inspiration! 🌟🥗`;
+            } else if (bmi >= 25 && bmi < 30) {
+                category = 'Overweight';
+                characterToActivate = 'weightChar';
+                emoji = '💪';
+                advice = `Hey ${currentUser}, you're in the overweight category. 
+                         This is a great opportunity for a health journey! 
+                         Small steps like daily walks, portion control, and 
+                         staying hydrated can make a big difference. 
+                         Your future self will thank you! 🌱🎯`;
+            } else {
+                category = 'Obese';
+                characterToActivate = 'weightChar';
+                emoji = '🏋️';
+                advice = `Dear ${currentUser}, your health journey starts today! 
+                         Every great transformation begins with a single step. 
+                         Consider consulting with a healthcare provider for 
+                         personalized guidance. Remember, progress is progress, 
+                         no matter how small. You are capable of amazing things! 🌈💫`;
+            }
+            
+            // Update result section
+            document.getElementById('bmiValue').innerHTML = `
+                BMI: ${roundedBMI}
+                <span style="font-size: 20px; display: block; margin-top: 5px;">
+                    ${category} ${emoji}
+                </span>
+            `;
+            
+            document.getElementById('adviceText').innerHTML = advice;
+            document.getElementById('bmiResult').style.display = 'block';
+            
+            // Update personal message
+            document.getElementById('personalMessage').innerHTML = `
+                <div style="text-align: center;">
+                    <span style="font-size: 50px; animation: bounce 1s infinite; display: inline-block;">${emoji}</span>
+                    <div class="user-name-highlight">${currentUser}</div>
+                    <div style="font-size: 18px; margin-top: 10px; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 10px;">
+                        ${category} Category
+                    </div>
+                </div>
+            `;
+            
+            // Animate the active character
+            animateCharacter(characterToActivate);
+        }
+
+        // Animate characters based on BMI category
+        function animateCharacter(activeCharId) {
+            // Reset all characters
+            const characters = ['leanChar', 'mediumChar', 'weightChar'];
+            characters.forEach(char => {
+                const element = document.getElementById(char);
+                element.classList.remove('active-character');
+                element.style.animation = 'bounce 2s infinite';
+            });
+            
+            // Activate the relevant character with enhanced animation
+            const activeElement = document.getElementById(activeCharId);
+            activeElement.classList.add('active-character');
+            activeElement.style.animation = 'bounce 1s infinite';
+            
+            // Add floating animation to character section
+            const characterSection = document.getElementById('characterSection');
+            characterSection.style.transition = 'all 0.5s';
+            characterSection.style.boxShadow = '0 0 30px rgba(255,255,255,0.3)';
+            
+            setTimeout(() => {
+                characterSection.style.boxShadow = 'none';
+            }, 500);
+        }
+
+        // Auto-save name when typing (optional)
+        document.getElementById('userName').addEventListener('input', function(e) {
+            if (e.target.value.trim() !== '') {
+                currentUser = e.target.value.trim();
+                document.getElementById('displayName').textContent = currentUser;
+            } else {
+                currentUser = 'Guest';
+                document.getElementById('displayName').textContent = 'Guest';
+            }
+        });
+
+        // Allow Enter key to calculate
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateBMI();
+            }
+        });
+    </script>
+</body>
+</html>
