@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>BMI Wellness Calculator ✨</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -241,10 +241,6 @@
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
 
-        .calculate-btn i {
-            font-size: 20px;
-        }
-
         /* Result Section */
         .result-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -355,16 +351,16 @@
             50% { transform: translateY(-10px); }
         }
 
-        .character i {
-            font-size: 60px;
-            margin-bottom: 10px;
-        }
-
         .character span {
             display: block;
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 5px;
+        }
+
+        .character span:first-child {
+            font-size: 60px;
+            margin-bottom: 10px;
         }
 
         .character p {
@@ -375,6 +371,121 @@
         .active-character {
             transform: scale(1.2);
             filter: drop-shadow(0 0 20px rgba(255,255,255,0.5));
+        }
+
+        /* What is BMI? Info Section */
+        .bmi-info-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f6f9fc 0%, #edf2f7 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            animation: fadeInUp 0.8s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bmi-info-header {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .bmi-info-header span {
+            font-size: 32px;
+        }
+
+        .bmi-info-content {
+            color: #4a5568;
+        }
+
+        .bmi-info-content p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .bmi-info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .bmi-info-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .bmi-info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+        }
+
+        .info-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .bmi-info-card h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 12px;
+        }
+
+        .bmi-info-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #718096;
+            margin-bottom: 0;
+        }
+
+        .bmi-info-note {
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bmi-info-note span {
+            font-size: 40px;
+        }
+
+        .bmi-info-note p {
+            margin-bottom: 0;
+            font-size: 16px;
+            line-height: 1.6;
+            color: white;
+        }
+
+        .bmi-info-note strong {
+            color: white;
+            font-weight: 700;
         }
 
         /* Copyright Section */
@@ -392,10 +503,6 @@
             flex-wrap: wrap;
         }
 
-        .copyright i {
-            color: #667eea;
-        }
-
         .copyright a {
             color: #667eea;
             text-decoration: none;
@@ -406,24 +513,427 @@
             text-decoration: underline;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
+        /* ========== MOBILE OPTIMIZATION ========== */
+        @media screen and (max-width: 768px) {
             .container {
+                padding: 15px;
+                border-radius: 20px;
+                margin: 10px;
+            }
+
+            .welcome-section {
                 padding: 20px;
             }
-            
+
+            .welcome-title {
+                font-size: 22px;
+            }
+
+            .welcome-title span {
+                font-size: 28px;
+            }
+
+            .name-input-area {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .name-input {
+                width: 100%;
+                padding: 12px 15px;
+                font-size: 15px;
+            }
+
+            .greeting-btn {
+                width: 100%;
+                padding: 12px 20px;
+                justify-content: center;
+            }
+
+            .greeting-message {
+                font-size: 15px;
+                line-height: 1.5;
+            }
+
             .main-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .character-container {
                 gap: 20px;
+            }
+
+            .input-section {
+                padding: 20px;
+            }
+
+            .input-title {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            .input-group {
+                margin-bottom: 15px;
+            }
+
+            .input-group label {
+                font-size: 14px;
+                margin-bottom: 6px;
+            }
+
+            .input-group input {
+                padding: 12px;
+                font-size: 15px;
+            }
+
+            .calculate-btn {
+                padding: 14px;
+                font-size: 16px;
+                margin-top: 15px;
+            }
+
+            .result-section {
+                padding: 20px;
+            }
+
+            .result-header {
+                font-size: 20px;
+                margin-bottom: 15px;
+            }
+
+            .personal-message {
+                padding: 20px;
+            }
+
+            .user-name-highlight {
+                font-size: 22px;
+            }
+
+            .bmi-badge {
+                font-size: 36px;
+            }
+
+            .advice-message {
+                font-size: 15px;
+                line-height: 1.5;
+                padding: 15px;
+            }
+
+            .character-section {
+                margin-top: 25px;
+                padding: 20px;
+            }
+
+            .character-section h3 {
+                font-size: 20px !important;
+                margin-bottom: 15px !important;
+            }
+
+            .character-container {
+                gap: 15px;
+                flex-direction: row;
+                justify-content: space-around;
+            }
+
+            .character {
+                flex: 0 1 auto;
+                min-width: 100px;
+            }
+
+            .character span:first-child {
+                font-size: 40px;
+            }
+
+            .character span:nth-child(2) {
+                font-size: 16px !important;
+            }
+
+            .character p {
+                font-size: 12px;
+                display: none;
+            }
+
+            .active-character {
+                transform: scale(1.1);
+            }
+
+            .bmi-info-section {
+                margin-top: 30px;
+                padding: 20px;
+            }
+
+            .bmi-info-header {
+                font-size: 20px;
+                margin-bottom: 15px;
+                padding-bottom: 12px;
+            }
+
+            .bmi-info-header span {
+                font-size: 28px;
+            }
+
+            .bmi-info-content p {
+                font-size: 15px;
+                line-height: 1.6;
+            }
+
+            .bmi-info-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                margin: 20px 0;
+            }
+
+            .bmi-info-card {
+                padding: 15px;
+            }
+
+            .info-icon {
+                font-size: 28px;
+                margin-bottom: 10px;
+            }
+
+            .bmi-info-card h4 {
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+
+            .bmi-info-card p {
+                font-size: 13px;
+                line-height: 1.5;
+            }
+
+            .bmi-info-note {
+                padding: 15px;
+                gap: 12px;
+            }
+
+            .bmi-info-note span {
+                font-size: 32px;
+            }
+
+            .bmi-info-note p {
+                font-size: 14px;
+            }
+
+            .copyright {
+                margin-top: 30px;
+                padding-top: 15px;
+                font-size: 12px;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .copyright span:nth-child(even) {
+                display: none;
             }
         }
 
-        /* Font Awesome Icons (using emoji as fallback) */
-        .fa {
-            font-family: 'Segoe UI', 'Poppins', sans-serif;
+        @media screen and (max-width: 480px) {
+            .container {
+                padding: 12px;
+                margin: 8px;
+            }
+
+            .welcome-section {
+                padding: 15px;
+            }
+
+            .welcome-title {
+                font-size: 20px;
+            }
+
+            .input-section,
+            .result-section {
+                padding: 15px;
+            }
+
+            .character-container {
+                gap: 10px;
+            }
+
+            .character {
+                min-width: 80px;
+            }
+
+            .character span:first-child {
+                font-size: 35px;
+            }
+
+            .character span:nth-child(2) {
+                font-size: 14px !important;
+            }
+
+            .character p {
+                display: none;
+            }
+
+            .bmi-badge {
+                font-size: 30px;
+            }
+
+            .advice-message {
+                font-size: 14px;
+                padding: 12px;
+            }
+
+            .bmi-info-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .bmi-info-card {
+                padding: 15px;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                text-align: left;
+            }
+
+            .info-icon {
+                margin-bottom: 0;
+                font-size: 32px;
+            }
+
+            .bmi-info-card h4 {
+                margin-bottom: 4px;
+            }
+
+            .bmi-info-note {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .bmi-info-note span {
+                font-size: 36px;
+            }
+
+            .copyright {
+                font-size: 11px;
+                padding-top: 12px;
+            }
+        }
+
+        @media screen and (max-width: 900px) and (orientation: landscape) {
+            .container {
+                max-width: 100%;
+                margin: 5px;
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .character-container {
+                gap: 30px;
+            }
+
+            .character p {
+                display: block;
+                font-size: 12px;
+            }
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .greeting-btn,
+            .calculate-btn,
+            .name-input,
+            .input-group input {
+                min-height: 48px;
+            }
+
+            .greeting-btn:hover,
+            .calculate-btn:hover {
+                transform: none;
+            }
+
+            .input-group {
+                margin-bottom: 18px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            * {
+                -webkit-tap-highlight-color: transparent;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            body {
+                padding: 10px;
+                overflow-x: hidden;
+            }
+
+            input[type="text"],
+            input[type="number"] {
+                font-size: 16px;
+            }
+
+            .character {
+                will-change: transform;
+            }
+
+            @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-5px); }
+            }
+        }
+
+        @media (prefers-color-scheme: dark) and (max-width: 768px) {
+            .container {
+                background: rgba(20, 20, 30, 0.98);
+            }
+
+            .input-section {
+                background: #2a2a3a;
+            }
+
+            .input-title {
+                color: #fff;
+            }
+
+            .input-group label {
+                color: #ddd;
+            }
+
+            .input-group input {
+                background: #333344;
+                border-color: #444455;
+                color: #fff;
+            }
+
+            .input-group input::placeholder {
+                color: #aaa;
+            }
+
+            .bmi-info-section {
+                background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+                border-color: rgba(255,255,255,0.1);
+            }
+
+            .bmi-info-header {
+                color: #fff;
+            }
+
+            .bmi-info-content p {
+                color: #e2e8f0;
+            }
+
+            .bmi-info-card {
+                background: #2a2a3a;
+                border-color: rgba(255,255,255,0.1);
+            }
+
+            .bmi-info-card h4 {
+                color: #fff;
+            }
+
+            .bmi-info-card p {
+                color: #cbd5e0;
+            }
+
+            .copyright {
+                color: #aaa;
+                border-top-color: rgba(255,255,255,0.1);
+            }
         }
     </style>
 </head>
@@ -447,7 +957,7 @@
 
         <!-- Main Grid - Input and Result Side by Side -->
         <div class="main-grid">
-            <!-- Left Side - Input For m -->
+            <!-- Left Side - Input Form -->
             <div class="input-section">
                 <div class="input-title">
                     <span>📝</span> Your Measurements
@@ -512,6 +1022,44 @@
                     <span>💪</span>
                     <span style="font-size: 20px; font-weight: 600;">Weight</span>
                     <p>Strong & Building</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- What is BMI? Information Section -->
+        <div class="bmi-info-section">
+            <div class="bmi-info-header">
+                <span>📚</span> What is BMI?
+            </div>
+            <div class="bmi-info-content">
+                <p><strong>Body Mass Index (BMI)</strong> is a simple measurement that helps assess if you have a healthy body weight for your height. It's calculated by dividing your weight in kilograms by your height in meters squared.</p>
+                
+                <div class="bmi-info-grid">
+                    <div class="bmi-info-card">
+                        <div class="info-icon">📊</div>
+                        <h4>Why it matters</h4>
+                        <p>BMI is a screening tool that can indicate potential health risks associated with being underweight, overweight, or obese.</p>
+                    </div>
+                    <div class="bmi-info-card">
+                        <div class="info-icon">⚠️</div>
+                        <h4>Limitations</h4>
+                        <p>BMI doesn't measure body fat directly and may not be accurate for athletes, pregnant women, or elderly individuals.</p>
+                    </div>
+                    <div class="bmi-info-card">
+                        <div class="info-icon">💡</div>
+                        <h4>Categories</h4>
+                        <p>Underweight: &lt;18.5 | Normal: 18.5-24.9 | Overweight: 25-29.9 | Obese: ≥30</p>
+                    </div>
+                    <div class="bmi-info-card">
+                        <div class="info-icon">🏥</div>
+                        <h4>Consult a Doctor</h4>
+                        <p>BMI is just one indicator. Always consult healthcare professionals for a complete health assessment.</p>
+                    </div>
+                </div>
+                
+                <div class="bmi-info-note">
+                    <span>🌟</span>
+                    <p><strong>Remember:</strong> BMI is a starting point, not the final word on your health. Focus on overall wellness, not just numbers!</p>
                 </div>
             </div>
         </div>
@@ -670,7 +1218,7 @@
             }, 500);
         }
 
-        // Auto-save name when typing (optional)
+        // Auto-save name when typing
         document.getElementById('userName').addEventListener('input', function(e) {
             if (e.target.value.trim() !== '') {
                 currentUser = e.target.value.trim();
@@ -678,15 +1226,3 @@
             } else {
                 currentUser = 'Guest';
                 document.getElementById('displayName').textContent = 'Guest';
-            }
-        });
-
-        // Allow Enter key to calculate
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                calculateBMI();
-            }
-        });
-    </script>
-</body>
-</html>
