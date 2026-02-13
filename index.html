@@ -150,6 +150,38 @@
             to { opacity: 1; transform: translateX(0); }
         }
 
+        /* Unit Toggle */
+        .unit-toggle {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+
+        .unit-btn {
+            padding: 12px 25px;
+            border: 2px solid #667eea;
+            background: white;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #667eea;
+            transition: all 0.3s;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .unit-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .unit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+
         /* Main Content Grid */
         .main-grid {
             display: grid;
@@ -216,6 +248,15 @@
             border-color: #667eea;
             box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
             transform: scale(1.02);
+        }
+
+        .dual-input {
+            display: flex;
+            gap: 15px;
+        }
+
+        .dual-input .input-group {
+            flex: 1;
         }
 
         .calculate-btn {
@@ -555,6 +596,15 @@
                 line-height: 1.5;
             }
 
+            .unit-toggle {
+                gap: 10px;
+            }
+
+            .unit-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
             .main-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -581,6 +631,11 @@
             .input-group input {
                 padding: 12px;
                 font-size: 15px;
+            }
+
+            .dual-input {
+                flex-direction: column;
+                gap: 10px;
             }
 
             .calculate-btn {
@@ -744,6 +799,11 @@
                 padding: 15px;
             }
 
+            .unit-btn {
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+
             .character-container {
                 gap: 10px;
             }
@@ -835,13 +895,15 @@
         @media (hover: none) and (pointer: coarse) {
             .greeting-btn,
             .calculate-btn,
+            .unit-btn,
             .name-input,
             .input-group input {
                 min-height: 48px;
             }
 
             .greeting-btn:hover,
-            .calculate-btn:hover {
+            .calculate-btn:hover,
+            .unit-btn:hover {
                 transform: none;
             }
 
@@ -904,6 +966,17 @@
                 color: #aaa;
             }
 
+            .unit-btn {
+                background: #333344;
+                border-color: #667eea;
+                color: #fff;
+            }
+
+            .unit-btn.active {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+            }
+
             .bmi-info-section {
                 background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
                 border-color: rgba(255,255,255,0.1);
@@ -955,6 +1028,12 @@
             </div>
         </div>
 
+        <!-- Unit Toggle -->
+        <div class="unit-toggle">
+            <button class="unit-btn active" id="metricBtn" onclick="setUnit('metric')">📏 Metric (kg/cm)</button>
+            <button class="unit-btn" id="imperialBtn" onclick="setUnit('imperial')">📐 Imperial (lbs/ft/in)</button>
+        </div>
+
         <!-- Main Grid - Input and Result Side by Side -->
         <div class="main-grid">
             <!-- Left Side - Input Form -->
@@ -963,18 +1042,46 @@
                     <span>📝</span> Your Measurements
                 </div>
                 
-                <div class="input-group">
-                    <label>
-                        <span>⚖️</span> Weight (kg)
-                    </label>
-                    <input type="number" id="weight" placeholder="Enter your weight" step="0.1">
+                <!-- Metric Inputs -->
+                <div id="metric-inputs">
+                    <div class="input-group">
+                        <label>
+                            <span>⚖️</span> Weight (kg)
+                        </label>
+                        <input type="number" id="weight-kg" placeholder="Enter your weight" step="0.1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>
+                            <span>📏</span> Height (cm)
+                        </label>
+                        <input type="number" id="height-cm" placeholder="Enter your height" step="0.1">
+                    </div>
                 </div>
-                
-                <div class="input-group">
-                    <label>
-                        <span>📏</span> Height (cm)
-                    </label>
-                    <input type="number" id="height" placeholder="Enter your height" step="0.1">
+
+                <!-- Imperial Inputs (Hidden by Default) -->
+                <div id="imperial-inputs" style="display: none;">
+                    <div class="input-group">
+                        <label>
+                            <span>⚖️</span> Weight (lbs)
+                        </label>
+                        <input type="number" id="weight-lbs" placeholder="Enter your weight" step="0.1">
+                    </div>
+                    
+                    <div class="dual-input">
+                        <div class="input-group">
+                            <label>
+                                <span>📏</span> Feet
+                            </label>
+                            <input type="number" id="height-ft" placeholder="feet" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label>
+                                <span>📐</span> Inches
+                            </label>
+                            <input type="number" id="height-in" placeholder="inches" step="0.1">
+                        </div>
+                    </div>
                 </div>
                 
                 <button class="calculate-btn" onclick="calculateBMI()">
@@ -1080,6 +1187,29 @@
 
     <script>
         let currentUser = 'Guest';
+        let currentUnit = 'metric';
+
+        // Set unit (metric/imperial)
+        function setUnit(unit) {
+            currentUnit = unit;
+            
+            // Update button states
+            document.getElementById('metricBtn').classList.remove('active');
+            document.getElementById('imperialBtn').classList.remove('active');
+            
+            if (unit === 'metric') {
+                document.getElementById('metricBtn').classList.add('active');
+                document.getElementById('metric-inputs').style.display = 'block';
+                document.getElementById('imperial-inputs').style.display = 'none';
+            } else {
+                document.getElementById('imperialBtn').classList.add('active');
+                document.getElementById('metric-inputs').style.display = 'none';
+                document.getElementById('imperial-inputs').style.display = 'block';
+            }
+            
+            // Hide previous result when switching units
+            document.getElementById('bmiResult').style.display = 'none';
+        }
 
         // Welcome message and name handling
         function setGreeting() {
@@ -1108,23 +1238,45 @@
 
         // Calculate BMI and update all sections
         function calculateBMI() {
-            const weight = parseFloat(document.getElementById('weight').value);
-            const height = parseFloat(document.getElementById('height').value);
-            
             // Check if name is entered
             if (currentUser === 'Guest') {
                 alert('Please enter your name first! 👋');
                 return;
             }
             
-            // Validation
-            if (!weight || !height || weight <= 0 || height <= 0) {
-                alert('Please enter valid weight and height! 📊');
-                return;
+            let weight, height, bmi;
+            
+            // Get measurements based on selected unit
+            if (currentUnit === 'metric') {
+                weight = parseFloat(document.getElementById('weight-kg').value);
+                height = parseFloat(document.getElementById('height-cm').value);
+                
+                // Validation
+                if (!weight || !height || weight <= 0 || height <= 0) {
+                    alert('Please enter valid weight and height! 📊');
+                    return;
+                }
+                
+                // Calculate BMI (metric)
+                bmi = weight / ((height / 100) ** 2);
+                
+            } else {
+                weight = parseFloat(document.getElementById('weight-lbs').value);
+                let feet = parseFloat(document.getElementById('height-ft').value) || 0;
+                let inches = parseFloat(document.getElementById('height-in').value) || 0;
+                
+                // Validation
+                if (!weight || weight <= 0 || (feet <= 0 && inches <= 0)) {
+                    alert('Please enter valid weight and height! 📊');
+                    return;
+                }
+                
+                // Convert imperial to metric and calculate BMI
+                let totalInches = (feet * 12) + inches;
+                bmi = (weight / (totalInches ** 2)) * 703;
             }
             
-            // Calculate BMI
-            const bmi = weight / ((height / 100) ** 2);
+            // Round to 1 decimal place
             const roundedBMI = Math.round(bmi * 10) / 10;
             
             // Determine category and personalized advice
@@ -1226,3 +1378,15 @@
             } else {
                 currentUser = 'Guest';
                 document.getElementById('displayName').textContent = 'Guest';
+            }
+        });
+
+        // Allow Enter key to calculate
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateBMI();
+            }
+        });
+    </script>
+</body>
+</html>
